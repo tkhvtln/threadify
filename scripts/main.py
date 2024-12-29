@@ -28,7 +28,7 @@ async def create_database():
 
 
 @app.post("/article", tags=["Article"], summary="Add article")
-async def add_article(user: schemas.UserSchema, session: db.depence):
+async def add_article(user: schemas.UserSchema, session: db.db_session):
     try:
         new_article = models.UserModel(article=user.article)
         session.add(new_article)
@@ -39,7 +39,7 @@ async def add_article(user: schemas.UserSchema, session: db.depence):
 
 
 @app.get("/article", tags=["Article"], summary="Get article")
-async def get_article(session: db.depence):
+async def get_article(session: db.db_session):
     try:
         query = select(models.UserModel).order_by(models.UserModel.id.desc())
         result = await session.execute(query)
@@ -50,7 +50,7 @@ async def get_article(session: db.depence):
 
 
 @app.delete("/article/{article_id}", tags=["Article"], summary="Delete article")
-async def delete_article(article_id: int, session: db.depence):
+async def delete_article(article_id: int, session: db.db_session):
     try:
         article = await session.get(models.UserModel, article_id)
         if article is None:

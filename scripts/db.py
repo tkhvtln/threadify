@@ -13,4 +13,4 @@ async def get_session():
 
 engine = create_async_engine(DATABASE_URL)
 session = async_sessionmaker(engine, expire_on_commit=False)
-depence = Annotated[AsyncSession, Depends(get_session)]
+db_session = Annotated[AsyncSession, Depends(get_session)]
